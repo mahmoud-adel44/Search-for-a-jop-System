@@ -26,8 +26,12 @@ class Resumes extends Component
      */
     public function render()
     {
-        $user = Student::where('user_id', Auth::user()->id)->first();
-        $resumes = Resume::where('student_id', $user->id)->get();
+        // $user = Student::where('user_id', Auth::user()->id)->first();
+        // $resumes = Resume::where('student_id', $user->id)->get();
+        //----------------------------------------------------------
+
+        $resumes = Auth::user()->student->resumes;
+        // $resumes = Auth::user()->student()->resumes;
         return view('components.resumes', compact('resumes'));
     }
 }

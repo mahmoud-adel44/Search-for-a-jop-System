@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Jop;
 use App\Company;
+use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class CompanyController extends Controller
 {
@@ -16,12 +20,34 @@ class CompanyController extends Controller
   public function index()
   {
     $company = Company::where('user_id', Auth::user()->id)->first();
+    // $jops = Jop::where('company_id', $company->id)->get();
+    $jops = Auth::user()->company->jops;
+    // dd($jops);
+
+
+    // $jop = Jop::findOrFail($id->id);
+
+    // $jop_id = $jop->id;
+    // $students = Student::wherePivot("jop_id", $jop_id)->get();
+
+    // $data = DB::table('jop_student')->get();
     // dd($company);
     // dd($user);
     return view(
       'companies.index',
-      compact('company')
+      [
+        'company' => $company,
+        'jops' => $jops,
+        // 'students' => $students,
+      ]
     );
+  }
+  public function show(Request $request, $id)
+  {
+    $jop = Jop::findOrFail($id);
+    $data = DB::table('jop_student')->where('jop_id', $id)->get();
+
+    return view('companies.show', compact('data'));
   }
 
   /**
@@ -79,10 +105,7 @@ class CompanyController extends Controller
    * @param  \App\Company  $company
    * @return \Illuminate\Http\Response
    */
-  public function show(Company $company)
-  {
-    //
-  }
+
 
   /**
    * Show the form for editing the specified resource.
@@ -90,7 +113,7 @@ class CompanyController extends Controller
    * @param  \App\Company  $company
    * @return \Illuminate\Http\Response
    */
-  public function edit(Request $request,$id)
+  public function edit(Request $request, $id)
   {
 
     $company = Company::findOrFail($id);
@@ -128,14 +151,28 @@ class CompanyController extends Controller
     return redirect(\route('companies.index'));
   }
 
+  public function approve($id)
+  {
+    $data = DB::table('jop_student')->where('id', $id)->first();
+    DB::table('jop_student')->where('id', $id)->update(['status' => 1]);
+    // dd($data);
+    $student = Student::where('id', $data->student_id)->update(['approved' => 'approved', 'varified' => 'varified', 'condition' => 'employeed']);
+    $jop = Jop::where('id', $data->jop_id)->update(['status' => 0]);
+    return back();
+  }
+
   /**
    * Remove the specified resource from storage.
    *
    * @param  \App\Company  $company
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Company $company)
+  public function destroy($id)
   {
-    //
+    // $data = DB::table('jop_student')->where('id', $id)->first();
+    // $data->delete();
+    DB::table('jop_student')->where('id', $id)->delete();
+
+    return back();
   }
 }

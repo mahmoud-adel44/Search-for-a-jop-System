@@ -33,13 +33,23 @@ Route::get('/logout', 'AuthController@logout')->name('auth.logout');
 
 
 //Routes for Students
-Route::resource('students', 'StudentController')->except(['update' ,'show']);
+Route::resource('students', 'StudentController')->except(['update', 'show']);
 Route::post('/students/update/{id}', 'StudentController@update')->name('students.update');
+Route::get('/students/apply/{id}', 'StudentController@apply')->name('students.apply');
+Route::post('/students/sent/{id}', 'StudentController@sent')->name('students.sent');
+//--------------------------------------------------------------------------------------------
+// Route::get('/students/apply/{id}', 'JopStudentController@apply')->name('students.apply');
+// Route::post('/students/sent/{id}', 'JopStudentController@sent')->name('students.sent');
+//------------------------------------------------------------------------------------------
 
 
 //Routes for company
-Route::resource('companies', 'CompanyController')->except(['update' , 'show']);
+Route::resource('companies', 'CompanyController')->except(['update', 'show', 'destroy']);
 Route::post('/companies/update/{id}', 'CompanyController@update')->name('companies.update');
+Route::get('/companies/approve/{id}', 'CompanyController@approve')->name('companies.approve');
+Route::get('/companies/show/{id}', 'CompanyController@show')->name('companies.show');
+Route::get('/jops/destroy/{id}', 'CompanyController@destroy')->name('companies.destroy');
+
 
 //Routes for resumes
 Route::get('/resumes/create', 'ResumeController@create')->name('resumes.create');
@@ -53,4 +63,3 @@ Route::get('/jops/create', 'JopController@create')->name('jops.create');
 Route::post('/jops/store', 'JopController@store')->name('jops.store');
 Route::get('/companies/jops', 'JopController@index')->name('companies.jops');
 Route::get('/jops/delete/{id}', 'JopController@delete')->name('jops.delete');
-

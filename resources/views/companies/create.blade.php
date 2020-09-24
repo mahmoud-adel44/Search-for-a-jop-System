@@ -2,6 +2,8 @@
 
 @extends('layout')
 
+n
+
 @section('content')
 
 

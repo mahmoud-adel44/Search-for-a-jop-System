@@ -21,4 +21,10 @@ class Student extends Model
     {
         return $this->hasMany('App\Resume');
     }
+
+    //student hasMany jops 
+    public function jops()
+    {
+        return $this->belongsToMany('App\Jop');
+    }
 }

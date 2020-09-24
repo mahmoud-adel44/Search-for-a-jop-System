@@ -67,9 +67,9 @@ class ResumeController extends Controller
     public function delete($id)
     {
         $resume = Resume::findOrFail($id);
-        
+
         unlink(\public_path('uploads/resumes/') . $resume->file_resume);
-    
+
         $resume->delete();
 
         return back();

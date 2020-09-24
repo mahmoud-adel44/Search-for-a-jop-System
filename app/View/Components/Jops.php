@@ -27,8 +27,12 @@ class Jops extends Component
     public function render()
     {
 
-        $user = Company::where('user_id', Auth::user()->id)->first();
-        $jops = Jop::where('company_id', $user->id)->get();
+        // $user = Company::where('user_id', Auth::user()->id)->first();
+        // $jops = Jop::where('company_id', $user->id)->get();
+        //---------------------------------------------------------------
+
+        $jops = Auth::user()->company->jops;
+
         return view('components.jops', compact('jops'));
     }
 }

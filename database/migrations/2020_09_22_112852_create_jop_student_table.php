@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJopsTable extends Migration
+class CreateJopStudentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateJopsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jops', function (Blueprint $table) {
+        Schema::create('jop_student', function (Blueprint $table) {
             $table->id();
 
-            $table->boolean('status')->default(1);
-            $table->string('jop_title', 100);
-            $table->string('location', 100);
-            $table->foreignId('company_id')->constrained();
+            $table->foreignId('student_id')->constrained();
+            $table->foreignId('jop_id')->constrained();
+            $table->boolean('status')->default(0);
+            $table->foreignId('resume_id')->constrained();
             $table->boolean('block')->default(0);
-
 
             $table->timestamps();
         });
@@ -34,6 +33,6 @@ class CreateJopsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jops');
+        Schema::dropIfExists('jop_student');
     }
 }
