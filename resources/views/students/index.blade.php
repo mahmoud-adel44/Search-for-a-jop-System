@@ -21,6 +21,10 @@ student
 <li class="nav-item">
   <a class="nav-link " href="{{route('students.resumes')}}">view resumes</a>
 </li>
+<form class="form-inline my-2 my-lg-0">
+  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="keyword">
+  
+</form>
 @endsection
 
 @section('content')
@@ -29,6 +33,7 @@ student
 
 <h1 class="d-flex justify-content-center">Avalliable Jops</h1>
 <br>
+<div id="allJops">
 <table class="table">
   <thead>
     <tr>
@@ -40,6 +45,7 @@ student
       <th scope="col">Action</th>
     </tr>
   </thead>
+  
   @foreach ($jops as $item)
 
 
@@ -61,5 +67,71 @@ student
   
   </tbody>
   @endforeach
+
 </table>
+</div>
+@endsection
+@section('scripts')
+<script>
+  $('#keyword').keyup(function(){
+    let keyword = $(this).val()
+    let url = "{{route('students.search')}}" + "?keyword=" + keyword
+
+     console.log(url);
+
+    $.ajax({
+
+      type:"GET", 
+      url: url, 
+      contentType:false,
+      processData:false,
+      success:function(data)
+      {
+        $('#allJops').empty()
+        for(jop of data)
+        {
+          
+          $('#allJops').append(`
+          <table class="table">
+          <thead>
+            <tr>
+            
+              <th scope="col">jop title</th>
+              <th scope="col">location</th>
+              <th scope="col">status</th>
+              <th scope="col">created_at</th>
+             
+            </tr>
+          </thead>
+          
+        <tbody>
+            <tr>
+              
+              <td>${jop.jop_title}</td>
+              <td>${jop.location}</td>
+              
+            
+              
+              <td>valid</td>
+              
+              
+              
+              <td>${jop.created_at}</td>
+              
+            
+            </tr>
+        </tbody>
+      </table>
+        ` )
+
+        }
+
+        //console.log(data)
+      }
+
+    })
+  })
+
+</script>
+    
 @endsection

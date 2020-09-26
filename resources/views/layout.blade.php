@@ -15,7 +15,7 @@
   
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" style="color: red">hoda</a>
+    <a class="navbar-brand" href="#" style="color: red">System</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -56,7 +56,7 @@
     @yield('content')
   </div>
 
-  <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
+  <script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.js') }}"></script>
 
   @yield('scripts')

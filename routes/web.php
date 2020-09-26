@@ -36,6 +36,7 @@ Route::get('/logout', 'AuthController@logout')->name('auth.logout');
 Route::resource('students', 'StudentController')->except(['update', 'show']);
 Route::post('/students/update/{id}', 'StudentController@update')->name('students.update');
 Route::get('/students/apply/{id}', 'StudentController@apply')->name('students.apply');
+Route::get('/students/search', 'StudentController@search')->name('students.search');
 Route::post('/students/sent/{id}', 'StudentController@sent')->name('students.sent');
 //--------------------------------------------------------------------------------------------
 // Route::get('/students/apply/{id}', 'JopStudentController@apply')->name('students.apply');

@@ -20,6 +20,7 @@ class StudentController extends Controller
   {
 
     $user = Student::where('user_id', Auth::user()->id)->first();
+    // $jops = Jop::all();
     $jops = Jop::where('status', 1)->get();
 
     $resumes = Resume::where('student_id', $user->id)->get();
@@ -33,9 +34,11 @@ class StudentController extends Controller
       ]
     );
   }
-  public function show(Student $student)
+  public function search(Request $request)
   {
-    //
+    $keyword = $request->keyword;
+    $jops =   Jop::where('jop_title', 'like', "%$keyword%")->get();
+    return response()->json($jops);
   }
 
   /**

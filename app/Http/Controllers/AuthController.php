@@ -32,11 +32,15 @@ class AuthController extends Controller
 
         ]);
 
-       
+
 
         Auth::login($user);
-        if($request->status == 'student'){return redirect(route('students.create'));}
-        if($request->status == 'company'){return redirect(route('companies.create'));}
+        if ($request->status == 'student') {
+            return redirect(route('students.create'));
+        }
+        if ($request->status == 'company') {
+            return redirect(route('companies.create'));
+        }
         return redirect(route('student.index'));
     }
 
@@ -56,13 +60,17 @@ class AuthController extends Controller
 
         $is_login = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
 
-        // if (!$is_login) {
-        //     return back();
-        // }
+        if (!$is_login) {
+            return back();
+        }
 
-        if(Auth::user()->status == 'student'){return redirect(route('students.index'));}
-        if(Auth::user()->status == 'company'){return redirect(route('companies.index'));}
-        
+        if (Auth::user()->status == 'student') {
+            return redirect(route('students.index'));
+        }
+        if (Auth::user()->status == 'company') {
+            return redirect(route('companies.index'));
+        }
+
 
         return redirect(route('admin.index'));
     }
@@ -72,6 +80,4 @@ class AuthController extends Controller
         Auth::logout();
         return view('welcome');
     }
-
-
 }
